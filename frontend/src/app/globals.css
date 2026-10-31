@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 222 47% 7%;
+  --foreground: 210 40% 98%;
+  --card: 222 47% 10%;
+  --card-foreground: 210 40% 98%;
+  --border: 217 32% 18%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 210 40% 98%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* ==========================================================================
+   Modern Web Guidance: interactions-in-complex-layouts
+   Isolates layout/style/paint recalculations in complex dashboard columns
+   ========================================================================== */
+.board-column {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px auto 800px;
+}
+
+@supports not (content-visibility: auto) {
+  .board-column {
+    contain: layout style paint;
+  }
+}
+
+/* ==========================================================================
+   Modern Web Guidance: responsive-table
+   Accessible sticky headers + container-query stacked layout on narrow widths
+   ========================================================================== */
+.table-wrapper {
+  overflow: auto;
+  max-inline-size: 100%;
+  max-block-size: min(500px, 80vh);
+  container-type: inline-size;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border));
+}
+
+.table-wrapper table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  --label-1: "Repository / Target";
+  --label-2: "Branch / Type";
+  --label-3: "Health / Severity";
+  --label-4: "Security Score";
+  --label-5: "Findings";
+  --label-6: "Actions";
+}
+
+.table-wrapper thead {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 1;
+  background-color: #0f172a;
+}
+
+.table-wrapper tbody th {
+  position: sticky;
+  inset-inline-start: 0;
+  background-color: #111c33;
+  text-align: start;
+}
+
+@container (width < 600px) {
+  .table-wrapper table,
+  .table-wrapper thead,
+  .table-wrapper tbody,
+  .table-wrapper tr,
+  .table-wrapper th,
+  .table-wrapper td {
+    display: block;
+  }
+
+  .table-wrapper thead {
+    /* MANDATORY: Hide column header from layout and screen readers. */
+    display: none;
+  }
+
+  .table-wrapper tr {
+    margin-block-end: 1.25rem;
+    border: 1px solid #1e293b;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  .table-wrapper tbody th {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    background-color: #1e293b;
+  }
+
+  .table-wrapper td:nth-child(2)::before {
+    content: var(--label-2) ": ";
+    font-weight: 600;
+    color: #94a3b8;
+  }
+
+  .table-wrapper td:nth-child(3)::before {
+    content: var(--label-3) ": ";
+    font-weight: 600;
+    color: #94a3b8;
+  }
+
+  .table-wrapper td:nth-child(4)::before {
+    content: var(--label-4) ": ";
+    font-weight: 600;
+    color: #94a3b8;
+  }
+
+  .table-wrapper td:nth-child(5)::before {
+    content: var(--label-5) ": ";
+    font-weight: 600;
+    color: #94a3b8;
+  }
+
+  .table-wrapper td:nth-child(6)::before {
+    content: var(--label-6) ": ";
+    font-weight: 600;
+    color: #94a3b8;
+  }
+}
+
